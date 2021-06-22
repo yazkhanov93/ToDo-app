@@ -1,0 +1,84 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+        <!-- Boxicons link -->
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+        <!-- Font awesome link-->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+        <title>ToDo App</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">ToDo-App</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll" style="margin-left: 100px;">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href=""><i class="bx bx-user"></i> Hello {{request.user}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Login</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav navbar-nav-scroll me-auto my-lg-0">
+                        <li class="nav-item ml-4">
+                            <a class="btn btn-outline-success" href="{% url 'add_task' %}"><i class="bx bx-plus"></i> Add task</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" method="get">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            {% block content %}
+
+            {% for task in task %}
+            
+            <div class="card mb-4">
+                <div class="card-body">
+                    <a href="detail/{{task.id}}" style="text-decoration: none;">{{task.name|truncatechars:20}}</a>
+                    <span style="float: right;">
+                        <small>{{task.date}}</small>
+                        <a class="btn btn-outline-warning bx bx-pencil" href="{% url 'edit_task' task.id %}"></a>
+                        <a class="btn btn-outline-danger bx bx-trash-alt" href="{% url 'delete_task' task.id %}"></a>
+                    </span>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        {% endblock %}
+    </div>
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+   
+
+        <!-- Boxicons js -->
+        <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>    
+    </body>
+    </html>

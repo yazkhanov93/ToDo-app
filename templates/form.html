@@ -1,0 +1,18 @@
+{% extends 'home.html' %}
+
+{% block title %} Add Task {% endblock %}
+
+
+{% block content %}
+<div class="content d-flex justify-content-center">
+	<form class="form-control row m-4 d-flex justify-content-middle" method="post" enctype="multipart/form-data" style="width: 40rem;">
+		{% csrf_token %}
+		<h4>Add Task</h4>
+		{{form.name.label}}{{form.name}}
+		{{form.content.label}}{{form.content}}
+		<input type="hidden" name="user" value="{{request.user.id}}">
+		<input type="submit" name="" value="Save" style="margin-top: 10px;"> 
+		{{form.errors}}
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center">
+
+<form method="post" class="mt-4 form-control" style="width: 400px;">
+	{% csrf_token %}
+	<h4>Login</h4>
+	<input type="text" class="form-control mb-3" name="username" placeholder="username">
+	<input type="password" class="form-control mb-3" name="password" placeholder="password">
+	<input type="submit" class="form-control bg-dark text-light" value="Sign Up" name="">
+	<a href="{% url 'sign_up' %}" class="nav-link d-flex justify-content-center">I don't have an account</a>
+	{% for message in messages %}
+        <p>{{message}}</p>
+    {% endfor %}
+</form>
+
+</div>
+
+{% endblock %}
